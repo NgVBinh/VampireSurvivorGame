@@ -113,7 +113,6 @@ public class EnemyController : MonoBehaviour
         if(this.hp <= 0)
         {
             animator.SetTrigger("die");
-            
             StartCoroutine(WaitToDie());
         }
     }

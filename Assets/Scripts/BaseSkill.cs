@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 public class BaseSkill : MonoBehaviour
 {
     private string skillName;
-    private int damage = 0;
+    private float damage = 0;
 
     public virtual void Initialize()
     {
@@ -24,11 +24,11 @@ public class BaseSkill : MonoBehaviour
         return this.skillName;
     }
 
-    public virtual int GetDamage()
+    public virtual float GetDamage()
     {
         return this.damage;
     }
-    public virtual void SetDamage(int damage)
+    public virtual void SetDamage(float damage)
     {
         this.damage = damage;
     }

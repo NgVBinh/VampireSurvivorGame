@@ -463,7 +463,7 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: bb58dfb31b725994b8314e8a3456bb10, type: 2}
   - {fileID: 11400000, guid: bc7258e4bc2893a4a8e086ebfbe566c4, type: 2}
-  currentCharacterIndex: 0
+  currentCharacterIndex: 1
   character: {fileID: 0}
 --- !u!1 &185016980
 GameObject:

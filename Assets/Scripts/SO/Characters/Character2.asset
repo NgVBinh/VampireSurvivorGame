@@ -17,5 +17,5 @@ MonoBehaviour:
   characterName: Devil
   description: 
   health: 30
-  speed: 3
-  initialDamage: 0
+  speed: 3.3
+  initialDamage: 1.21

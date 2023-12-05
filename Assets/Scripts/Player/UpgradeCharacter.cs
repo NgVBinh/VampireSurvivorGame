@@ -12,6 +12,7 @@ public class UpgradeCharacter : MonoBehaviour
     public CharacterData character;
 
     //
+    [SerializeField] private Text playerName;
     [SerializeField] private Text playerCoin;
     [Header("Text Infor Player")]
     [SerializeField] private Text txtHealth;
@@ -28,6 +29,11 @@ public class UpgradeCharacter : MonoBehaviour
     private int coinHp;
     private int coinSpeed;
     private int coinDamage;
+
+    private void Awake()
+    {
+        character = characters[currentCharacterIndex];
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -51,11 +57,16 @@ public class UpgradeCharacter : MonoBehaviour
 
     public void Display()
     {
+        playerName.text = character.characterName;
         playerCoin.text = PlayerPrefs.GetInt("Coin") + " $ ";
 
         txtHealth.text = "Heath: " + ConvertFloat(character.health);
         txtMaxSpeed.text = "Max Speed: " + ConvertFloat(character.speed);
         txtDamage.text = "Damage Bullet: " + ConvertFloat(character.initialDamage);
+
+        btnHealth.text = coinHp + "$";
+        btnSpeed.text = coinSpeed + "$";
+        btnDamage.text = coinDamage + "$";
     }
 
     public float ConvertFloat(float number)
@@ -94,7 +105,7 @@ public class UpgradeCharacter : MonoBehaviour
             Display();
         }
     }
-    public void UpgradeDamageBullet()
+    public void UpgradeDamage()
     {
         if (PlayerPrefs.GetInt("Coin") >= coinDamage)
         {

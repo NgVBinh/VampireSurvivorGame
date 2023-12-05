@@ -8,13 +8,11 @@ public class BulletAuto : BaseSkill
     public float force;
     private GameObject targetGameobject;
     private Rigidbody2D rb;
-    private float damagePlayer;
     Vector3 direc = Vector3.right;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        damagePlayer = FindObjectOfType<PlayerManager>().character.initialDamage;
     }
     private void FixedUpdate()
     {
@@ -38,7 +36,6 @@ public class BulletAuto : BaseSkill
         this.targetGameobject = go;
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -46,7 +43,7 @@ public class BulletAuto : BaseSkill
             EnemyController enemyController = collision.gameObject.GetComponent<EnemyController>();
             if (enemyController != null)
             {
-                enemyController.TakeDamage(damagePlayer);
+                enemyController.TakeDamage(this.GetDamage());
                 Destroy(gameObject);
             }
 

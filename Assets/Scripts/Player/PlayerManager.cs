@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour
     private bool isDie= false;
     private float maxHp;
     private float currentHp;
+    private float damagePlayer;
     private int exp = 0;
 
     private int level = 0;
@@ -27,6 +28,7 @@ public class PlayerManager : MonoBehaviour
         SpawnCharacter();
         character = characters[currentCharacterIndex];
         maxHp = character.health;
+        damagePlayer = character.initialDamage;
         currentHp = maxHp;
         PS = GetComponentsInChildren<ParticleSystem>();
         foreach(ParticleSystem ps in PS)
@@ -88,7 +90,7 @@ public class PlayerManager : MonoBehaviour
         // Tạo lại nhân vật
         SpawnCharacter();
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHp = Mathf.Clamp(currentHp - damage, 0, maxHp);
         if(damage>0) { 
@@ -121,6 +123,11 @@ public class PlayerManager : MonoBehaviour
     public float GetCurentExp()
     {
         return this.exp;
+    }
+
+    public float GetDamage()
+    {
+        return this.damagePlayer;
     }
 
     public int GetLevel()
