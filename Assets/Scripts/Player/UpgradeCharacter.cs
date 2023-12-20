@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class UpgradeCharacter : MonoBehaviour
 {
     public CharacterData[] characters;
+    //
+    public Transform characterTransform;    
+    //
     public int currentCharacterIndex=0;
     [HideInInspector]
     public CharacterData character;
@@ -30,23 +34,17 @@ public class UpgradeCharacter : MonoBehaviour
     private int coinSpeed;
     private int coinDamage;
 
-    private void Awake()
-    {
-        character = characters[currentCharacterIndex];
-    }
+
     // Start is called before the first frame update
     void Start()
     {
+        characters = IOCharacterData.instance.dataCharacters;
+        character = characters[currentCharacterIndex];
         CoinToUpgrade();
         Display();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        character = characters[currentCharacterIndex];
-
-    }
 
     private void CoinToUpgrade()
     {
@@ -57,6 +55,14 @@ public class UpgradeCharacter : MonoBehaviour
 
     public void Display()
     {
+        if (characterTransform.childCount > 0)
+        {
+            Destroy(characterTransform.GetChild(0).gameObject);
+        }
+        GameObject prefab = Instantiate(character.characterPrefab, characterTransform.position, transform.rotation);
+        prefab.transform.localScale = new Vector3(5, 5, 5);
+        prefab.transform.SetParent(characterTransform);
+
         playerName.text = character.characterName;
         playerCoin.text = PlayerPrefs.GetInt("Coin") + " $ ";
 
@@ -89,6 +95,7 @@ public class UpgradeCharacter : MonoBehaviour
         {
             character.health+= character.health / 10;
             PlayerPrefs.SetInt("Coin", (PlayerPrefs.GetInt("Coin") - coinHp));
+            IOCharacterData.instance.ChangeScriptableObjectData(character);
             CoinToUpgrade();
             Display();
 
@@ -101,6 +108,7 @@ public class UpgradeCharacter : MonoBehaviour
         {
             character.speed += character.speed / 10;
             PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") - coinSpeed);
+            IOCharacterData.instance.ChangeScriptableObjectData(character);
             CoinToUpgrade();
             Display();
         }
@@ -111,8 +119,18 @@ public class UpgradeCharacter : MonoBehaviour
         {
             character.initialDamage += character.initialDamage / 10;
             PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") - coinDamage);
+            IOCharacterData.instance.ChangeScriptableObjectData(character);
             CoinToUpgrade();
             Display();
         }
+    }
+
+    public void nextCharacter()
+    {
+        currentCharacterIndex++;
+        currentCharacterIndex %=  characters.Length;
+        character = characters[currentCharacterIndex];
+        CoinToUpgrade();
+        Display();
     }
 }

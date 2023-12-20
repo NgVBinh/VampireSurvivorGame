@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Character2
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 6404638688946424666, guid: 103fa7a27bc274840a76a130ac8e63c2, type: 3}
+  pathCharacterPrefab: 
   characterID: 1
   characterName: Devil
   description: 
-  health: 30
-  speed: 3.3
-  initialDamage: 1.21
+  health: 36.3
+  speed: 3
+  initialDamage: 1

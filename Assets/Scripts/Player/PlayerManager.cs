@@ -22,6 +22,8 @@ public class PlayerManager : MonoBehaviour
     private Animator animator;
     //
     private ParticleSystem[] PS;
+    // attributes
+    public Attributes[] attributes;
 
     private void Awake()
     {
@@ -138,5 +140,11 @@ public class PlayerManager : MonoBehaviour
     public void IncreaseExp(int exp)
     {
         this.exp += exp;
+    }
+
+
+    public void test()
+    {
+        characters[0].health += 10;
     }
 }

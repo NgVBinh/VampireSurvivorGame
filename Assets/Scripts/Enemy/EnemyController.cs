@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -50,7 +51,7 @@ public class EnemyController : MonoBehaviour
 
         if (!isShortType)
         {
-            if(Vector3.Magnitude(transform.position - playerTransform.position)<range && timer >= shootTimer)
+            if (Vector3.Magnitude(transform.position - playerTransform.position) < range && timer >= shootTimer)
             {
                 timer = 0;
                 //Vector3 playerPos = playerTransform.position;
@@ -62,7 +63,7 @@ public class EnemyController : MonoBehaviour
                 bulletEnemy.transform.SetParent(enemySpawnBullet.transform);
 
                 //max time to destroy bullet
-                Destroy(bulletEnemy,10f);
+                Destroy(bulletEnemy, 10f);
             }
         }
     }
@@ -72,7 +73,7 @@ public class EnemyController : MonoBehaviour
         timer += Time.deltaTime;
         if (!isShortType)
         {
-            if (Vector3.Magnitude(transform.position - playerTransform.position) >= range  )
+            if (Vector3.Magnitude(transform.position - playerTransform.position) >= range)
             {
                 transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
             }
@@ -87,9 +88,9 @@ public class EnemyController : MonoBehaviour
     // Rotate the enemy towards the player's position
     public void RotateTowardsPlayer()
     {
-        directionToPlayer = playerTransform.position - transform.position; 
+        directionToPlayer = playerTransform.position - transform.position;
         float dotProduct = Vector3.Dot(directionToPlayer, transform.right); // Calculate dot product
-       
+
         if (dotProduct > 0)
         {
             // Player is on the right side, flip the sprite to face right
@@ -110,24 +111,10 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
-        if(this.hp <= 0)
+        if (this.hp <= 0)
         {
             animator.SetTrigger("die");
             StartCoroutine(WaitToDie());
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
-            if(player != null)
-            {
-                animator.SetTrigger("attack");
-                player.TakeDamage(damageEnemy);
-            }
-
         }
     }
 
@@ -146,4 +133,35 @@ public class EnemyController : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
+            if (player != null)
+            {
+                animator.SetTrigger("attack");
+                player.TakeDamage(damageEnemy);
+            }
+
+        }
+    }
+
+    public float timeInAoe = 0;
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("DamageAoe"))
+        {
+
+            timeInAoe += Time.deltaTime;
+            if (timeInAoe > 1)
+            {
+                timeInAoe = 0;
+                TakeDamage(0.5f);
+            }
+
+        }
+    }
+
 }

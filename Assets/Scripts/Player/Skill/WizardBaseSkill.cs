@@ -24,9 +24,11 @@ public class WizardBaseSkill : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(level<4)level = playerManager.GetLevel();
-        damagePlayer = playerManager.GetDamage();
-
+        if(playerManager!= null)
+        {
+            if (level < 4) level = playerManager.GetLevel();
+            damagePlayer = playerManager.GetDamage();
+        }
         Skill(level);
     }
 

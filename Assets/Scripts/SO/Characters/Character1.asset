@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Character1
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 4902682696581246035, guid: bcb15bdb25f7cb64ab7c6145634a89b0, type: 3}
+  pathCharacterPrefab: 
   characterID: 0
   characterName: FireWizard
   description: 
-  health: 20
+  health: 58.564003
   speed: 2
   initialDamage: 1

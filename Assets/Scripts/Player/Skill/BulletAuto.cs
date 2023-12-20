@@ -10,14 +10,15 @@ public class BulletAuto : BaseSkill
     private Rigidbody2D rb;
     Vector3 direc = Vector3.right;
 
-    private void Start()
+    [SerializeField] private GameObject AOE_Prefabs;
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
         Activate();
-     
+ 
     }
 
     public override void Activate()
@@ -43,10 +44,19 @@ public class BulletAuto : BaseSkill
             EnemyController enemyController = collision.gameObject.GetComponent<EnemyController>();
             if (enemyController != null)
             {
+                GameObject aoe = Instantiate(AOE_Prefabs,enemyController.transform.position, Quaternion.identity);
+                SkillAOE skillAOE = aoe.GetComponent<SkillAOE>();
+                if (skillAOE != null)
+                {
+                    skillAOE.PlayPartical();
+                }
+                Destroy(aoe, 2f);
                 enemyController.TakeDamage(this.GetDamage());
                 Destroy(gameObject);
             }
 
         }
     }
+
+
 }
